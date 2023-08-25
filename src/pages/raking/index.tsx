@@ -130,7 +130,7 @@ export default function Raking() {
     fetchData();
   }, []);
 
-  const desiredTeamId = '72606442-4060-4f25-9270-823c4f80f9ad';
+  const desiredTeamId = 'af3520e8-4aa7-4634-aba8-0ef3cffa308d';
   const desiredTeam = teamStats.find
     (
       team => team.teamId === desiredTeamId
