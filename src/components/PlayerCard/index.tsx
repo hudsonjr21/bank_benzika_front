@@ -7,14 +7,12 @@ type PlayerCardProps = {
   positionId: string;
 };
 
-const PlayerCard: React.FC<PlayerCardProps> = ({ profileImage, name, positionId }) => {
+export default function PlayerCard({ profileImage, name, positionId } : PlayerCardProps) {
   return (
     <div className={styles.card}>
       <img src={profileImage} alt={`Foto de ${name}`} className={styles.image} />
       <h2 className={styles.name}>{name}</h2>
-      <p className={styles.position}>Posição ID: {positionId}</p>
+      <p className={styles.position}>{positionId}</p>
     </div>
   );
 };
-
-export default PlayerCard;

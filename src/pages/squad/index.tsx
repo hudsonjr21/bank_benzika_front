@@ -14,35 +14,46 @@ type Player = {
   profileImage: string;
 };
 
-const SquadPage: React.FC = () => {
+type Position = {
+  id: string;
+  name: string;
+};
+
+export default function SquadPage () {
   const [players, setPlayers] = useState<Player[]>([]);
+  const [positions, setPositions] = useState<Position[]>([]);
 
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
         const apiClient = setupAPIClient();
-        const response = await apiClient.get('/player');
-        const playersWithProfileImages = response.data.map((player: Player) => ({
-          ...player,
-          profileImage: `/profile-images/${player.profile}`, // Monta o caminho da imagem
-        }));
-        setPlayers(playersWithProfileImages);
+        const [playersResponse, positionsResponse] = await Promise.all([
+          apiClient.get('/player'),
+          apiClient.get('/position'),
+        ]);
+
+        setPlayers(playersResponse.data);
+        setPositions(positionsResponse.data);
       } catch (error) {
-        console.error('Error fetching players:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
     fetchPlayers();
   }, []);
 
+  const getPositionName = (positionId: string) => {
+    const position = positions.find((pos) => pos.id === positionId);
+    return position ? position.name : 'Posição desconhecida';
+  };
 
-return(
-  <>
-    <Head>
-    <title>Elenco - JOGOS ENTRE AMIGOS</title>
-    </Head>
+  return (
+    <>
+      <Head>
+        <title>Elenco - JOGOS ENTRE AMIGOS</title>
+      </Head>
       <div>
-        <Header/>
+        <Header />
         <main className={styles.container}>
           <h1>Elenco</h1>
 
@@ -51,21 +62,19 @@ return(
               <PlayerCard
                 key={player.id}
                 name={player.name}
-                positionId={player.position_id}
-                profileImage={player.profileImage} // Passe a prop profileImage
+                positionId={getPositionName(player.position_id)}
+                profileImage={player.profileImage}
               />
             ))}
           </div>
         </main>
       </div>
-  </>
-  )
+    </>
+  );
 };
 
 export const getServerSideProps = canSSRAuth(async (ctx) => {
-    return {
-      props: {},
-    };
-  });
-
-export default SquadPage;
+  return {
+    props: {},
+  };
+});

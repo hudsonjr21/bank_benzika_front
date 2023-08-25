@@ -101,14 +101,14 @@ export default function TopScorers() {
             <table className={styles.standingsTable}>
               <thead>
                 <tr>
-                  <th>Raking</th>
+                  <th className={styles.thSize}>Raking</th>
                   <th>Gols</th>
                 </tr>
               </thead>
               <tbody>
                 {topScorers.map((playerStats, index) => (
                   <tr key={playerStats.player.id}>
-                    <td>{index + 1} - {playerStats.player.name}</td>
+                    <td>{index + 1}° {playerStats.player.name}</td>
                     <td>{playerStats.goals}</td>
                   </tr>
                 ))}
