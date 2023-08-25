@@ -16,9 +16,7 @@ const ContactPage = () => {
           <h1>Contato para amistoso</h1>
 
           <div className={styles.contactCard}>
-            <div className={styles.cardImage}>
-              <img src="/img/local.JPG" alt="Team Logo" width={600} height={300} />
-            </div>
+              <img src="/img/local.JPG" alt="Team Logo" className={styles.cardImage} />
             <h2 className={styles.cardTitle}>↓ Marque seu jogo</h2>
             <div className={styles.cardIcons}>
               <a href="https://www.instagram.com/benz.ikafc/" target="_blank" rel="noopener noreferrer">
